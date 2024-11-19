@@ -1,0 +1,13 @@
+/* styles for the admin */
+
+.aep-admin-container {
+	
+}
+.aep-admin-title, .aep-admin-container form h2 {
+	font-size: 2.1rem;
+	text-align: center;
+	color: #555555;
+}
+.aep-admin-container p, aep-admin-container form h2 + p{
+	font-size: 1.05rem;
+}
