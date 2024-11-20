@@ -1,6 +1,7 @@
 <?php
 defined('ABSPATH') || die();
 if(!is_admin()) die();
+$empty = new \AlesAgglo\AlesAggloEmptyPlugin\EmptyClass('WorldPress');
 ?>
 <div class="aep-admin-container">
 <?php if (isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true') { ?>
@@ -14,5 +15,6 @@ if(!is_admin()) die();
 				submit_button();
 			?>
 		</form>
+		<?php echo $empty->hello(); ?>
 	</div>
 </div>

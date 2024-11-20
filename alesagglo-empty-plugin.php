@@ -67,6 +67,7 @@ function aep_init() {
 }
 function aep_load_dependencies() {
 	aep_load_textdomain();
+	require_once AEP_PATH . 'vendor/autoload.php';
 	require_once AEP_PATH . 'inc/tools.php';
 	add_action('wp_enqueue_scripts', 'aep_register_scripts');
 	if (is_admin()) {

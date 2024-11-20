@@ -1,0 +1,16 @@
+{
+    "name": "alesagglo/alesagglo-empty-plugin",
+    "description": "AlesAgglo Empty Plugin",
+    "type": "wordpress-plugin",
+    "autoload": {
+        "psr-4": {
+            "AlesAgglo\\AlesAggloEmptyPlugin\\": "inc/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ydufresne-alesagglo",
+            "email": "yann.dufresne@alesagglo.fr"
+        }
+    ]
+}
