@@ -1,13 +1,13 @@
 /* scripts for the front */
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
 	console.log("AEP admin loaded.");
 	
-	window.AEP_FunctionAfterLoad = function(arg) {
+	window.AEP_FunctionAdminAfterLoad = function(arg) {
 		//
 	}
-};
+});
 
-function AEP_FunctionBeforeLoad (arg) {
-	
+function AEP_FunctionAdminBeforeLoad (arg) {
+	//
 }

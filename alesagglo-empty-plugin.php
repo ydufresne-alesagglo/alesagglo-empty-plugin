@@ -3,9 +3,10 @@
 Plugin Name: Ales Agglo Empty Plugin
 Plugin URI: 
 Description: Empty Plugin by Ales Agglomeration
-Version: 0.1
+Version: 1.0.0
 Author: Ales Agglomeration
 Author URI: https://www.ales.fr/
+Author EMail: contact@alesagglo.fr
 Text Domain: alesagglo-empty-plugin
 Domain Path: /languages
 */
@@ -219,7 +220,7 @@ function aep_cron_job() {
  *	define and display shortcode
  */
 add_shortcode( 'alesagglo-empty-plugin', 'aep_shortcode' );
-function aep_shortcode($atts, $content = null ){
+function aep_shortcode($atts, $content = null ) {
 	extract(
 		shortcode_atts(
 			array( 'param' => null,
@@ -230,4 +231,26 @@ function aep_shortcode($atts, $content = null ){
 	ob_start();
 	include('template-parts/shortcode.php');
 	return ob_get_clean();
+}
+
+/*
+ * ajax route
+ */
+add_action('wp_ajax_aep_ajax_action', 'aep_ajax_callback');
+add_action('wp_ajax_nopriv_aep_ajax_action', 'aep_ajax_callback');
+function aep_ajax_callback() {
+
+	if (isset($_POST['query'])) {
+		$query = sanitize_text_field($_POST['query']);
+
+		if ($query == "send value")
+			$results = array("receive value");
+		else
+			$results = array($query);
+
+		wp_reset_postdata();
+		wp_send_json_success($results);
+	} else {
+		wp_send_json_error('Invalid request');
+	}
 }
