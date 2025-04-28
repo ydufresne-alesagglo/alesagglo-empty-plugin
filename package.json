@@ -1,0 +1,19 @@
+{
+  "name": "alesagglo-empty-plugin",
+  "version": "1.0.0",
+  "description": "AlesAgglo Empty Plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ydufresne-alesagglo/alesagglo-empty-plugin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ydufresne-alesagglo/alesagglo-empty-plugin/issues"
+  },
+  "homepage": "https://github.com/ydufresne-alesagglo/alesagglo-empty-plugin#readme"
+}

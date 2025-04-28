@@ -200,19 +200,29 @@ function aep_deactivate_cron() {
 		wp_unschedule_event($timestamp, 'aep_cron_job');
 	}
 }
-add_filter('cron_schedules', 'aep_cron_schedules');
-function aep_cron_schedules($schedules) {
-	$schedules['aep_cron_interval'] = array(
-		'interval' => get_option('aep_cron_interval'),
-		'display' => __('AEP Cron Interval', AEP_SLUG)
-	);
-	return $schedules;
-}
-add_action('aep_cron_job', 'aep_cron_job');
-function aep_cron_job() {
-	if (AEP_DEBUG) error_log('AEP cron job running');
-	
-	set_transient('aep_data_transient', 'any_data', get_option('aep_cron_interval'));
+if (AEP_CRON) {
+	add_filter('cron_schedules', 'aep_cron_schedules');
+	function aep_cron_schedules($schedules) {
+		$schedules['aep_cron_interval'] = array(
+			'interval' => get_option('aep_cron_interval'),
+			'display' => __('AEP Cron Interval', AEP_SLUG)
+		);
+		return $schedules;
+	}
+
+	add_action('aep_cron_job', 'aep_cron_job');
+	function aep_cron_job() {
+		if (get_transient('aep_cron_lock')) {
+			error_log('AEP cron job already running');
+			return;
+		}
+		set_transient('aep_cron_lock', true, get_option('aep_cron_interval')-1);
+
+		if (AEP_DEBUG) error_log('AEP cron job running');
+		set_transient('aep_data_transient', 'any_data', 'cache information');
+
+		delete_transient('aep_cron_lock');
+	}
 }
 
 
