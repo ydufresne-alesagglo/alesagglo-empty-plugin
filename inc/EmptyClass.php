@@ -1,5 +1,6 @@
 <?php
-namespace AlesAgglo\AlesAggloEmptyPlugin;
+namespace AlesAggloEmptyPlugin;
+
 class EmptyClass {
 	private $name;
 

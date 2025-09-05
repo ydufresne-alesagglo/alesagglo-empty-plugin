@@ -33,7 +33,7 @@ const AEP_OPTIONS = array(
 );
 
 
-/*
+/**
  *	activate / deactivate
  */
 register_activation_hook(__FILE__, 'aep_activate');
@@ -49,7 +49,7 @@ function aep_deactivate() {
 }
 
 
-/*
+/**
  *	uninstall
  */
 register_uninstall_hook(__FILE__, 'aep_uninstall');
@@ -59,7 +59,7 @@ function aep_uninstall() {
 }
 
 
-/*
+/**
  *	load dependencies
  */
 add_action('plugins_loaded', 'aep_init');
@@ -86,7 +86,7 @@ function aep_register_admin_scripts() {
 }
 
 
-/*
+/**
  *	I18
  */
 function aep_load_textdomain() {
@@ -94,7 +94,7 @@ function aep_load_textdomain() {
 }
 
 
-/*
+/**
  *	set / unset options
  */
 function aep_set_options() {
@@ -138,7 +138,7 @@ function aep_init_options() {
 }
 
 
-/*
+/**
  *	define menu
  */
 add_action('admin_menu', 'aep_set_settings_page');
@@ -167,7 +167,7 @@ function aep_settings_icon_size() {
 }
 
 
-/*
+/**
  *	define and display settings page
  */
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'aep_settings_link', 10, 4);
@@ -186,7 +186,7 @@ function aep_display_settings_page() {
 }
 
 
-/*
+/**
  *	define / remove cron
  */
 function aep_activate_cron() {
@@ -226,7 +226,7 @@ if (AEP_CRON) {
 }
 
 
-/*
+/**
  *	define and display shortcode
  */
 add_shortcode( 'alesagglo-empty-plugin', 'aep_shortcode' );
@@ -243,7 +243,7 @@ function aep_shortcode($atts, $content = null ) {
 	return ob_get_clean();
 }
 
-/*
+/**
  * ajax route
  */
 add_action('wp_ajax_aep_ajax_action', 'aep_ajax_callback');
