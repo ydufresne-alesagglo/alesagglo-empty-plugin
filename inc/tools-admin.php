@@ -38,7 +38,7 @@ if(!function_exists('display_plugin_option')) {
 				}
 				echo '</select>';
 				break;
-			
+
 		}
 	}
 }

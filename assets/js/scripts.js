@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 	console.log("AEP loaded.");
-	
+
 	window.AEP_FunctionAfterLoad = function(arg) {
 		//
 	}
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			xhr.responseType = "json";
 			xhr.addEventListener('error', () => console.log("Erreur Ajax"));
 			xhr.addEventListener('load', function() {
-				
+
 				concatResult = "";
 				if(xhr.response.data){
 					xhr.response.data.forEach((result) => {
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					});
 				}
 				ajaxResult.innerHTML = "<ul>"+concatResult+"</ul>";
-				
+
 			});
 
 			xhr.send("action=aep_ajax_action&query=" + encodeURIComponent(query));
