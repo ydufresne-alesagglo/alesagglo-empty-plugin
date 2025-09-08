@@ -8,6 +8,6 @@
 	text-align: center;
 	color: #555555;
 }
-.aep-admin-container p, aep-admin-container form h2 + p{
+.aep-admin-container p, .aep-admin-container form h2 + p{
 	font-size: 1.05rem;
 }
