@@ -22,7 +22,7 @@ define('AEP_CRON', false);
 define('AEP_DEBUG', false);
 
 
-// settings
+// admin settings
 const AEP_OPTIONS = array(
 	'aep_cron_interval' => array(
 		'label' => 'Cron Frequency',
@@ -30,6 +30,10 @@ const AEP_OPTIONS = array(
 		'default' => 900,
 		'attributes' => 'readonly'
 	),
+);
+// front datas
+$aep_data_js = array(
+	'info_to_js' => 'Hello from PHP to JS',
 );
 
 
@@ -78,10 +82,13 @@ function aep_load_dependencies() {
 	}
 }
 function aep_register_scripts() {
+	global $aep_data_js;
 	wp_enqueue_script('aep-scripts', AEP_URL . 'assets/js/scripts.js');
 	wp_enqueue_style('aep-styles', AEP_URL . 'assets/css/styles.css');
+	wp_localize_script('aep-scripts', 'aep_data', $aep_data_js);
 }
 function aep_register_admin_scripts() {
+	// wp_enqueue_media();
 	wp_enqueue_script('aep-scripts-admin', AEP_URL . 'assets/js/scripts-admin.js');
 	wp_enqueue_style('aep-styles-admin', AEP_URL . 'assets/css/styles-admin.css');
 }
@@ -244,6 +251,7 @@ function aep_shortcode($atts, $content = null ) {
 	return ob_get_clean();
 }
 
+
 /**
  * ajax route
  */
@@ -263,5 +271,17 @@ function aep_ajax_callback() {
 		wp_send_json_success($results);
 	} else {
 		wp_send_json_error('Invalid request');
+	}
+}
+
+
+/**
+ * define cookie
+ */
+add_action('init', 'aep_set_cookie');
+function aep_set_cookie() {
+	if (!isset($_COOKIE['aep_cookie_name'])) {
+		setcookie('aep_cookie_name', 'aep_cookie_value', time() + 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), false);
+		$_COOKIE['aep_cookie_name'] = 'aep_cookie_value';
 	}
 }
