@@ -83,6 +83,7 @@ function aep_load_dependencies() {
 	add_action('wp_enqueue_scripts', 'aep_register_scripts');
 	if (is_admin()) {
 		require_once AEP_PATH . 'inc/tools-admin.php';
+		add_action('admin_enqueue_scripts', 'aep_register_scripts');
 		add_action('admin_enqueue_scripts', 'aep_register_admin_scripts');
 	}
 }
