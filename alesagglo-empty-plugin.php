@@ -22,7 +22,7 @@ define('AEP_CRON', false);
 define('AEP_DEBUG', false);
 
 
-// admin settings
+// datas to admin setting options
 const AEP_OPTIONS = array(
 	'aep_cron_interval' => array(
 		'label' => 'Cron Frequency',
@@ -31,9 +31,13 @@ const AEP_OPTIONS = array(
 		'attributes' => 'readonly'
 	),
 );
-// front datas
-$aep_data_js = array(
-	'info_to_js' => 'Hello from PHP to JS',
+// datas to front js var
+const AEP_JSVAR = array(
+	'aep_jsvar_name' => 'Hello from PHP to JS Var',
+);
+// datas to front cookie
+const AEP_COOKIE = array(
+	'aep_cookie_name' => 'Hello from PHP to Cookie',
 );
 
 
@@ -43,6 +47,7 @@ $aep_data_js = array(
 register_activation_hook(__FILE__, 'aep_activate');
 function aep_activate() {
 	aep_set_options();
+	aep_set_cookie();
 	if (AEP_CRON) aep_activate_cron();
 	flush_rewrite_rules();
 }
@@ -82,10 +87,9 @@ function aep_load_dependencies() {
 	}
 }
 function aep_register_scripts() {
-	global $aep_data_js;
 	wp_enqueue_script('aep-scripts', AEP_URL . 'assets/js/scripts.js');
 	wp_enqueue_style('aep-styles', AEP_URL . 'assets/css/styles.css');
-	wp_localize_script('aep-scripts', 'aep_data', $aep_data_js);
+	wp_localize_script('aep-scripts', 'aep_data_jsvar', AEP_JSVAR);
 }
 function aep_register_admin_scripts() {
 	// wp_enqueue_media();
@@ -262,8 +266,8 @@ function aep_ajax_callback() {
 	if (isset($_POST['query'])) {
 		$query = sanitize_text_field($_POST['query']);
 
-		if ($query == "send value")
-			$results = array("receive value");
+		if ($query == 'send value')
+			$results = array('receive value');
 		else
 			$results = array($query);
 
@@ -278,10 +282,13 @@ function aep_ajax_callback() {
 /**
  * define cookie
  */
-add_action('init', 'aep_set_cookie');
+// add_action('init', 'aep_set_cookie');
 function aep_set_cookie() {
-	if (!isset($_COOKIE['aep_cookie_name'])) {
-		setcookie('aep_cookie_name', 'aep_cookie_value', time() + 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), false);
-		$_COOKIE['aep_cookie_name'] = 'aep_cookie_value';
+
+	foreach (AEP_COOKIE as $name => $value) {
+		if (!isset($_COOKIE[$name])) {
+			setcookie($name, $value, time() + 24 * 60 * 60, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), false);
+			$_COOKIE[$name] = $value;
+		}
 	}
 }

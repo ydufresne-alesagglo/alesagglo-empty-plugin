@@ -3,15 +3,6 @@
 document.addEventListener("DOMContentLoaded", function() {
 	console.log("AEP loaded.");
 
-	window.AEP_FunctionAfterLoad = function(arg) {
-		//
-	}
-
-
-	// Example of localized data from PHP to JS
-	const info_to_js = (aep_data && typeof aep_data == 'object' && aep_data.info_to_js) ? aep_data.info_to_js : '';
-	console.log("Info to JS: " + info_to_js);
-
 
 	// Example of ajax call
 	const ajaxButton = document.getElementById("ajaxButton");
@@ -25,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			xhr.open('POST', '/wp-admin/admin-ajax.php', true);
 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			xhr.responseType = "json";
-			xhr.addEventListener('error', () => console.log("Erreur Ajax"));
+			xhr.addEventListener('error', () => console.log('Erreur Ajax'));
 			xhr.addEventListener('load', function() {
 
 				concatResult = "";
@@ -43,27 +34,42 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 
-	// Example of cookie read on page load
-	console.log("Cookie aep_cookie_name: " + getCookie('aep_cookie_name'));
+	// Example of localized data from PHP to JS Var
+	const aep_jsvar_name = (aep_data_jsvar && typeof aep_data_jsvar == "object" && aep_data_jsvar.aep_jsvar_name) ? aep_data_jsvar.aep_jsvar_name : "";
+	console.log("JS Var Name: " + aep_jsvar_name);
+
+
+	// Example of cookie
+	let aep_cookie_name = getCookie('aep_cookie_name');
+	console.log('Cookie Name: ' + aep_cookie_name);
 });
 
-function AEP_FunctionBeforeLoad (arg) {
-	//
-}
 
-// Cookie read function
+// Read cookie
 function getCookie(name = null) {
 	const cookies = {};
 	document.cookie.split(";").forEach(cookie => {
 		const [key, value] = cookie.split("=");
-		if (key.trim() && value != undefined) {
-			cookies[key.trim()] = value;
+		if (key && value != undefined) {
+			cookies[key.trim()] = decodeURIComponent(value.trim());
 		}
 	});
 
 	if (name == null) {
 		return cookies;
 	}
-
 	return cookies[name] || null;
+}
+
+// Write cookie
+function setCookie(name, value="", hours=24) {
+	const date = new Date();
+	date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+	const expires = "; expires=" + date.toUTCString();
+	document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+}
+
+// Delete cookie
+function unsetCookie(name) {
+	document.cookie = name + "=; Max-Age=0; path=/";
 }
