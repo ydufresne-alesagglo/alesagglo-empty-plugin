@@ -8,8 +8,9 @@ if(!function_exists('display_plugin_option')) {
 		$attributes = $args['attributes'] ?? '';
 		switch ($type) {
 			case 'number':
-				$value = intval($value);
-				echo '<input type="'.$type.'" id="'.$name.'" name="'.$name.'" value="'.$value.'" '.$attributes.'>';
+			case 'float':
+				$value = ($type == 'number' ? intval($value) : floatval($value));
+				echo '<input type="number"'.($type == 'float' ? ' step="any"' : '').' id="'.$name.'" name="'.$name.'" value="'.$value.'" '.$attributes.'>';
 				break;
 			case 'text':
 			case 'email':
