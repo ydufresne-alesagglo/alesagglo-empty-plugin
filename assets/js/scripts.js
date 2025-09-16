@@ -1,6 +1,6 @@
 /* scripts for the front */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	console.log("AEP loaded.");
 
 
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const ajaxResult = document.getElementById("ajaxResult");
 	if(ajaxButton && ajaxResult) {
 
-		ajaxButton.addEventListener("click", function() {
+		ajaxButton.addEventListener("click", function () {
 			const query = "send value";
 
 			const xhr = new XMLHttpRequest();
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 			xhr.responseType = "json";
 			xhr.addEventListener('error', () => console.log('Erreur Ajax'));
-			xhr.addEventListener('load', function() {
+			xhr.addEventListener('load', function () {
 
 				concatResult = "";
 				if(xhr.response.data){

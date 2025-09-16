@@ -127,7 +127,7 @@ function aep_init_options() {
 	add_settings_section(
 		'aep_options_section',
 		'AlesAgglo Empty Plugin',
-		function() { echo '<p>'.__('Welcome on settings page.', AEP_SLUG).'</p>'; },
+		function () { echo '<p>'.__('Welcome on settings page.', AEP_SLUG).'</p>'; },
 		'aep-settings'
 	);
 
