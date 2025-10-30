@@ -229,9 +229,9 @@ if (AEP_CRON) {
 			error_log('AEP cron job already running');
 			return;
 		}
+		if (AEP_DEBUG) error_log('AEP cron job running');
 		set_transient('aep_cron_lock', true, get_option('aep_cron_interval')-1);
 
-		if (AEP_DEBUG) error_log('AEP cron job running');
 		set_transient('aep_data_transient', 'any_data', 'cache information');
 
 		delete_transient('aep_cron_lock');
