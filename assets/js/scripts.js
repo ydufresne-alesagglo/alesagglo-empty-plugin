@@ -1,8 +1,6 @@
-/* scripts for the front */
+// scripts front ales agglo empty plugin
 
 document.addEventListener("DOMContentLoaded", function () {
-	console.log("AEP loaded.");
-
 
 	// Example of ajax call
 	const ajaxButton = document.getElementById("ajaxButton");
