@@ -19,6 +19,8 @@ define('AEP_PATH', plugin_dir_path(__FILE__));
 define('AEP_URL', plugin_dir_url(__FILE__));
 
 define('AEP_CRON', false);
+define('AEP_CRON_INTERVAL', 900); // 15 minutes
+
 define('AEP_DEBUG', false);
 
 
@@ -27,7 +29,7 @@ const AEP_OPTIONS = array(
 	'aep_cron_interval' => array(
 		'label' => 'Cron Frequency',
 		'type' => 'number',
-		'default' => 900,
+		'default' => AEP_CRON_INTERVAL,
 		'attributes' => 'readonly'
 	),
 );
@@ -212,12 +214,18 @@ function aep_deactivate_cron() {
 	if ($timestamp) {
 		wp_unschedule_event($timestamp, 'aep_cron_job');
 	}
+	wp_clear_scheduled_hook('aep_cron_job');
+	delete_transient('aep_cron_lock');
 }
 if (AEP_CRON) {
 	add_filter('cron_schedules', 'aep_cron_schedules');
 	function aep_cron_schedules($schedules) {
+		$interval = (int)get_option('aep_cron_interval', AEP_CRON_INTERVAL);
+		if ($interval < 60) {
+			$interval = 60;
+		}
 		$schedules['aep_cron_interval'] = array(
-			'interval' => get_option('aep_cron_interval'),
+			'interval' => $interval,
 			'display' => __('AEP Cron Interval', AEP_SLUG)
 		);
 		return $schedules;
@@ -232,10 +240,20 @@ if (AEP_CRON) {
 		if (AEP_DEBUG) error_log('AEP cron job starting...');
 		set_transient('aep_cron_lock', true, get_option('aep_cron_interval')-1);
 
-		set_transient('aep_data_transient', 'any_data', 'cache information');
+		try {
 
-		delete_transient('aep_cron_lock');
-		if (AEP_DEBUG) error_log('AEP cron job ...finished');
+			set_transient('aep_data_transient', 'any_data', 'cache information');
+
+		} catch (Exception $e) {
+
+			delete_transient('aep_cron_lock');
+			error_log('AEP cron job error: '.$e->getMessage());
+
+		} finally {
+
+			delete_transient('aep_cron_lock');
+			if (AEP_DEBUG) error_log('AEP cron job ...finished');
+		}
 	}
 }
 
