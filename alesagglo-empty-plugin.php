@@ -238,7 +238,7 @@ if (AEP_CRON) {
 			return;
 		}
 		if (AEP_DEBUG) error_log('AEP cron job starting...');
-		set_transient('aep_cron_lock', true, get_option('aep_cron_interval')-1);
+		set_transient('aep_cron_lock', true, get_option('aep_cron_interval', AEP_CRON_INTERVAL)-1);
 
 		try {
 
