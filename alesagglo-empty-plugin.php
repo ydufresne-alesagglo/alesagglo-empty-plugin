@@ -312,3 +312,20 @@ function aep_set_cookie() {
 		}
 	}
 }
+
+
+/**
+ * check PHP and WordPress version
+ */
+if ( version_compare( PHP_VERSION, '8.0', '<' ) ) {
+	add_action( 'admin_notices', function () {
+		echo '<div class="notice notice-error"><p>' . esc_html__( 'Plugin requires PHP 8.0 or higher.', AEP_SLUG ) . '</p></div>';
+	} );
+	return;
+}
+if ( version_compare( $GLOBALS['wp_version'], '7.0', '<' ) ) {
+	add_action( 'admin_notices', function () {
+		echo '<div class="notice notice-error"><p>' . esc_html__( 'Plugin requires WordPress 7.0 or higher..', AEP_SLUG ) . '</p></div>';
+	} );
+	return;
+}
